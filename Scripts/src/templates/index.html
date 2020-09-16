@@ -29,8 +29,14 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
-
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-'{{message.tags}}">
+		<strong>{{message.tags}}</strong> {{ message }}
+	  </div>
+	  {% endfor %}
+	  {% endif %}
+	
 	<div class="container-contact100">
 		<div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="{% static 'images/icons/map-marker.png'%}" data-scrollwhell="0" data-draggable="1"></div>
 
@@ -48,20 +54,20 @@
 			<form class="contact100-form validate-form"  method="POST" >
 				{% csrf_token %}
 				<div class="wrap-input100 validate-input" data-validate="Name is required">
-					<span class="label-input100">Full Name:</span>
-					<input class="input100" type="text" name="name" placeholder="Enter full name">
+					<span class="label-input100">Subject:</span>
+					<input class="input100" type="text" name="subject" placeholder="Enter The Subject">
 					<span class="focus-input100"></span>
 				</div>
 
-				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+				<!-- <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 					<span class="label-input100">From:</span>
 					<input class="input100" type="text" name="email" placeholder="Enter received email">
 					<span class="focus-input100"></span>
-				</div>
+				</div> -->
 
 				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 					<span class="label-input100">To:</span>
-					<input class="input100" type="text" name="email" placeholder="Enter sender email">
+					<input class="input100" type="text" name="to_email" placeholder="Enter sender email">
 					<span class="focus-input100"></span>
 				</div>
 

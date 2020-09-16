@@ -127,3 +127,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     
 ]
+#The SMTP backend is the default configuration inherited by Django. 
+# If you want to specify it explicitly, put the following in your settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#<<===========================================================================>>
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'testingdjango3@gmail.com'
+EMAIL_HOST_PASSWORD = 'aze1232000'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = 'False',
+# EMAIL_TIMEOUT = '',
+# EMAIL_SSL_KEYFILE = '',
+# EMAIL_SSL_CERTFILE = '',
