@@ -3,6 +3,7 @@ from django.core.mail import send_mass_mail, send_mail,EmailMessage
 from email_sender.settings import EMAIL_HOST_USER,EMAIL_BACKEND
 from django.contrib import messages
 from .forms import SubscribeForm
+import os
 
 # Create your views here.
 
@@ -12,14 +13,21 @@ def send_email(request):
         if form.is_valid():
             message = form.cleaned_data['body']
             subject = form.cleaned_data['subject']
-            to_email = request.POST['to_email']
-            attach = form.cleaned_data['attachments']
-            email = EmailMessage(subject, message, EMAIL_HOST_USER, to_email)
-            email.attach(attach)
+            recipient_list = request.POST['to_email']
+            email = EmailMessage(subject, message, EMAIL_HOST_USER, [recipient_list])
             email.send(fail_silently=False)
-            return redirect('https://docs.python.org/3/library/email.mime.html#email.mime.base.MIMEBase')
+            messages.success(request, f'email sent to {recipient_list} successfully.')
+            return redirect('/')
     else:
         form = SubscribeForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'index.html', context)
+
+
+            # email.attach_file(f)
+            # email.attach("TODO.docx", "it's my file")
     # if request.method == 'POST':
         # subject        = request.POST['subject']
         # recipient_list = request.POST['to_email']
@@ -30,12 +38,8 @@ def send_email(request):
         # # email.attach_file("Users\Zakaria Abdessamed\Desktop\ZakariaAbdessamedBrahimiResume.pdf", 'application/pdf')
         # email.send(fail_silently=False)
         # return redirect('/')
-    context = {
-        'form': form,
-    }
-    return render(request, 'index.html', context)
-
-
+            # attach = form.cleaned_data['attachments']
+            # f = os.path.abspath('TODO.docx')
 # def send_email(request):
 #     if request.method == 'POST':
 #         
