@@ -14,10 +14,16 @@ def send_email(request):
             message = form.cleaned_data['body']
             subject = form.cleaned_data['subject']
             recipient_list = request.POST['to_email']
+            attachmentss = request.FILES.getlist('attachmentss')
             email = EmailMessage(subject, message, EMAIL_HOST_USER, [recipient_list])
+            for attach in attachmentss:
+                print(attach.name)
+                email.attach(attach.name, attach.read(), attach.content_type)
             email.send(fail_silently=False)
             messages.success(request, f'email sent to {recipient_list} successfully.')
             return redirect('/')
+        else:
+            messages.error(request, f'the email did not send {recipient_list}')
     else:
         form = SubscribeForm()
     context = {
